@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedVault | Medical Document Organiser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <span>MedVault</span>
+        </div>
+
+        <div class="sidebar-label">MENU</div>
+
+        <nav>
+            <a href="#" class="nav-link active" data-view="dashboard">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+            <a href="#" class="nav-link" data-view="documents">
+                <i class="fa-solid fa-folder"></i> My Documents
+            </a>
+            <a href="#" class="nav-link" data-view="categories">
+                <i class="fa-solid fa-layer-group"></i> Categories
+            </a>
+            <a href="#" class="nav-link" data-view="reminders">
+                <i class="fa-solid fa-bell"></i> Expiry Reminders
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="security-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Your health data matters</h4>
+                <p>Your documents stay in your browser.</p>
+            </div>
+
+            <a href="#" class="nav-link" id="lockBtn">
+                <i class="fa-solid fa-lock"></i> Lock Application
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2 id="pageTitle">Dashboard</h2>
+                <p class="subtitle">Your personal health documents, organised.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <button class="icon-btn" id="notificationBtn">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="profile">
+                    <div class="avatar">U</div>
+                    <div>
+                        <strong>User</strong>
+                        <small>Personal Account</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <section id="dashboardView" class="view">
+
+            <div class="welcome">
+                <div>
+                    <h1>Welcome back! 👋</h1>
+                    <p>Keep your medical documents safe and accessible.</p>
+                </div>
+                <button class="primary-btn" id="uploadBtn">
+                    <i class="fa-solid fa-plus"></i> Upload Document
+                </button>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fa-solid fa-file-medical"></i></div>
+                    <div class="stat-info">
+                        <p>Total Documents</p>
+                        <h2 id="totalCount">0</h2>
+                        <small>All your health records</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fa-solid fa-folder-open"></i></div>
+                    <div class="stat-info">
+                        <p>Categories</p>
+                        <h2 id="categoryCount">6</h2>
+                        <small>Organised document types</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fa-solid fa-clock"></i></div>
+                    <div class="stat-info">
+                        <p>Expiring Soon</p>
+                        <h2 id="expiryCount">0</h2>
+                        <small>Within the next 30 days</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <p>Recent Uploads</p>
+                        <h2 id="recentCount">0</h2>
+                        <small>Uploaded in the last 7 days</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div class="section-heading">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Expiry Alerts</h3>
+                <a href="#" data-view="reminders">View all</a>
+            </div>
+
+            <div id="expiryAlerts" class="alert-list">
+                <div class="empty-alert">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>No expiry alerts currently.</span>
+                </div>
+            </div>
+
+            <!-- Recent Documents -->
+            <div class="section-heading">
+                <h3>Recent Documents</h3>
+                <a href="#" data-view="documents">View all documents</a>
+            </div>
+
+            <div id="recentDocuments" class="document-grid"></div>
+        </section>
+
+        <!-- Documents -->
+        <section id="documentsView" class="view hidden">
+
+            <div class="welcome">
+                <div>
+                    <h1>My Documents</h1>
+                    <p>Manage all your personal medical records.</p>
+                </div>
+                <button class="primary-btn" id="uploadBtn2">
+                    <i class="fa-solid fa-plus"></i> Upload Document
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search documents, providers...">
+                </div>
+
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="Lab Reports">Lab Reports</option>
+                    <option value="Prescriptions">Prescriptions</option>
+                    <option value="Medical Scans">Medical Scans</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Vaccination">Vaccination</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="sortFilter">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+
+            <div id="allDocuments" class="document-grid"></div>
+        </section>
+
+        <!-- Categories -->
+        <section id="categoriesView" class="view hidden">
+            <div class="welcome">
+                <div>
+                    <h1>Categories</h1>
+                    <p>Browse your documents by medical category.</p>
+                </div>
+            </div>
+
+            <div id="categoryCards" class="category-grid"></div>
+        </section>
+
+        <!-- Reminders -->
+        <section id="remindersView" class="view hidden">
+            <div class="welcome">
+                <div>
+                    <h1>Expiry Reminders</h1>
+                    <p>Keep track of important medical document expiry dates.</p>
+                </div>
+            </div>
+
+            <div class="reminder-info">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div>
+                    <h3>Never miss an important date</h3>
+                    <p>Documents expiring within 30 days will appear here.</p>
+                </div>
+            </div>
+
+            <div id="allReminders"></div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal-overlay hidden" id="uploadModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h2>Upload Medical Document</h2>
+                <p>Add a new document to your medical vault.</p>
+            </div>
+            <button class="close-btn" id="closeUpload">&times;</button>
+        </div>
+
+        <form id="uploadForm">
+
+            <label>Document Name *</label>
+            <input type="text" id="docName" placeholder="e.g. Blood Test Report" required>
+
+            <label>Category *</label>
+            <select id="docCategory" required>
+                <option value="">Select category</option>
+                <option>Lab Reports</option>
+                <option>Prescriptions</option>
+                <option>Medical Scans</option>
+                <option>Insurance</option>
+                <option>Vaccination</option>
+                <option>Other</option>
+            </select>
+
+            <label>Healthcare Provider / Hospital</label>
+            <input type="text" id="docProvider" placeholder="e.g. Apollo Hospital">
+
+            <div class="form-row">
+                <div>
+                    <label>Document Date *</label>
+                    <input type="date" id="docDate" required>
+                </div>
+
+                <div>
+                    <label>Expiry Date (Optional)</label>
+                    <input type="date" id="docExpiry">
+                </div>
+            </div>
+
+            <label>Choose File (PDF, JPG, PNG) *</label>
+            <input type="file" id="docFile" accept=".pdf,.jpg,.jpeg,.png" required>
+
+            <div class="file-info">
+                <i class="fa-solid fa-shield-halved"></i>
+                Files are stored locally in your browser.
+            </div>
+
+            <button type="submit" class="primary-btn full-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save Document
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal-overlay hidden" id="previewModal">
+    <div class="modal preview-modal">
+        <div class="modal-header">
+            <div>
+                <h2 id="previewTitle">Document Preview</h2>
+                <p id="previewDetails"></p>
+            </div>
+            <button class="close-btn" id="closePreview">&times;</button>
+        </div>
+
+        <div id="previewContent" class="preview-content"></div>
+
+        <div class="preview-actions">
+            <button class="primary-btn" id="previewDownload">
+                <i class="fa-solid fa-download"></i> Download
+            </button>
+            <button class="secondary-btn" id="previewShare">
+                <i class="fa-solid fa-share-nodes"></i> Share
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Password Lock -->
+<div class="modal-overlay hidden" id="lockModal">
+    <div class="modal lock-modal">
+        <div class="lock-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h2 id="lockTitle">Protect Your Medical Vault</h2>
+        <p id="lockDescription">Create a password to protect access to your documents.</p>
+
+        <input type="password" id="lockPassword" placeholder="Enter password">
+        <input type="password" id="confirmPassword" placeholder="Confirm password">
+
+        <button class="primary-btn full-btn" id="lockSubmit">Set Password</button>
+        <button class="secondary-btn full-btn hidden" id="unlockSubmit">Unlock Vault</button>
+        <button class="text-btn" id="cancelLock">Cancel</button>
+        <p id="lockMessage"></p>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
